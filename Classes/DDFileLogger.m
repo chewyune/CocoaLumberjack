@@ -945,7 +945,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
 }
 
 - (NSFileHandle *)currentLogFileHandle {
-    if (_currentLogFileHandle == nil) {
+    if (_currentLogFileHandle == nil || ![[NSFileManager defaultManager] fileExistsAtPath:_currentLogFileInfo.filePath]) {
         NSString *logFilePath = [[self currentLogFileInfo] filePath];
 
         _currentLogFileHandle = [NSFileHandle fileHandleForWritingAtPath:logFilePath];
