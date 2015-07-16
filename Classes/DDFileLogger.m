@@ -881,7 +881,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
  * Otherwise a new file is created and returned.
  **/
 - (DDLogFileInfo *)currentLogFileInfo {
-    if (_currentLogFileInfo == nil) {
+    if (_currentLogFileInfo == nil || ![[NSFileManager defaultManager] fileExistsAtPath:_currentLogFileInfo.filePath]) {
         NSArray *sortedLogFileInfos = [logFileManager sortedLogFileInfos];
 
         if ([sortedLogFileInfos count] > 0) {
@@ -934,7 +934,7 @@ unsigned long long const kDDDefaultLogFilesDiskQuota   = 20 * 1024 * 1024; // 20
             }
         }
 
-        if (_currentLogFileInfo == nil) {
+        if (_currentLogFileInfo == nil || ![[NSFileManager defaultManager] fileExistsAtPath:_currentLogFileInfo.filePath]) {
             NSString *currentLogFilePath = [logFileManager createNewLogFile];
 
             _currentLogFileInfo = [[DDLogFileInfo alloc] initWithFilePath:currentLogFilePath];
